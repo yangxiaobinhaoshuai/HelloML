@@ -1,0 +1,36 @@
+
+# ======================
+# Python bytecode / cache
+# ======================
+__pycache__/
+*.py[cod]
+
+# ======================
+# Virtual environments
+# ======================
+.venv/
+.uv/
+.python-version
+
+# ======================
+# PyCharm / IDE
+# ======================
+.idea/
+*.iml
+
+# ======================
+# OS / editor junk
+# ======================
+.DS_Store
+
+# ======================
+# Logs / runtime outputs
+# ======================
+*.log
+
+# ======================
+# ML artifacts (minimal)
+# ======================
+checkpoints/
+runs/
+wandb/
