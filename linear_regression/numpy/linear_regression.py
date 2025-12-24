@@ -11,6 +11,12 @@ true_b = 4.2
 
 features = np.random.normal(loc=0, scale=1, size=(num_examples, num_input)).astype(np.float32)
 labels = (true_w[0] * features[:, 0] + true_w[1] * features[:, 1] + true_b).astype(np.float32)
+# Wrong
+# labels = (true_w @ features + true_b).astype(np.float32)
+
+# Right
+# labels = (features @ true_w + true_b).astype(np.float32)
+# labels = (features @ true_w.reshape(-1, 1) + true_b).reshape(-1).astype(np.float32)
 
 print("features shape: ", features.shape)
 print("labels shape: ", labels.shape)
@@ -84,15 +90,22 @@ epochs = 30
 losses = []
 for epoch in range(epochs):
     for X, y in data_iter(batch_size, features, labels):
+        # forward
         y_hat = linear_reg(X, w, b)
         loss = squared_loss(y, y_hat)
+
+        # l = 1/2 (y_hat - y)^2
+        # dl/dy_hat = (y_hat - y)
         err = y_hat - y.reshape(-1, 1)
         grad_w = X.T @ err
         grad_b = err.sum(axis=0)
 
         # For last batch
         cur_bs = len(X)
+
+        # update
         w, b = sgd(w, b, grad_w, grad_b, lr, cur_bs)
+    # 计算全量训练 loss
     train_l = squared_loss(labels, linear_reg(features, w, b)).mean()
     losses.append(train_l)
     print("epoch:", epoch + 1, f"train_l: {train_l:.6f}")
