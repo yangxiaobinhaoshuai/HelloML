@@ -92,7 +92,9 @@ for epoch in range(epochs):
     for X, y in data_iter(batch_size, features, labels):
         # forward
         y_hat = linear_reg(X, w, b)
-        loss = squared_loss(y, y_hat)
+
+        # Redundant here.
+        # loss = squared_loss(y, y_hat)
 
         # l = 1/2 (y_hat - y)^2
         # dl/dy_hat = (y_hat - y)
